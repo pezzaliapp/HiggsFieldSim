@@ -60,6 +60,7 @@ let x = 10, y = canvas.height / 2;
 let speed = 2;
 let radius = 10;
 let fieldStart = 120, fieldEnd = 280;
+let hasAcquiredMass = false;
 
 function drawField() {
   ctx.fillStyle = "#111";
@@ -81,26 +82,33 @@ function drawParticle() {
   ctx.fill();
 }
 
+
 function animate() {
   if (mode !== "particella") return;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawField();
   drawParticle();
 
-  if (x > fieldStart && x < fieldEnd) {
+  if (!hasAcquiredMass && x > fieldStart && x < fieldEnd) {
     speed = 1;
-    if (radius < 20) radius += 0.2;
-  } else {
-    speed = 2;
-    radius = 10;
+    if (radius < 20) {
+      radius += 0.2;
+    } else {
+      hasAcquiredMass = true;
+    }
   }
 
   x += speed;
-  if (x > canvas.width + 10) x = -10;
+  if (x > canvas.width + 10) {
+    x = -10;
+    if (hasAcquiredMass) {
+      speed = 1;
+      radius = 20;
+    }
+  }
+
   requestAnimationFrame(animate);
 }
-
-// Nuova simulazione CERN con esplosione
 function animateCERN() {
   if (mode !== "cern") return;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
