@@ -110,11 +110,6 @@ function animate() {
   if (x > fieldStart && x < fieldEnd) {
     speed = 1;
     if (radius < 20) radius += 0.2 * globalSpeed;
-  } else {
-    speed = 2;
-    radius = 10;
-  }
-
   x += speed * globalSpeed;
   if (x > canvas.width + 10) x = -10;
   requestAnimationFrame(animate);
