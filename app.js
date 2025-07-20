@@ -1,18 +1,26 @@
 
 let testi = {
   "it": {
+    "title": "Higgs Field Simulator",
+    "btnParticella": "🔴 Particella nel Campo di Higgs",
+    "btnCERN": "💥 Simula Esperimento CERN",
     "start": "Seleziona una modalità per iniziare la simulazione.",
     "particella": "Osserva come una particella acquisisce massa attraversando il campo di Higgs.",
     "cern": "Simulazione dell'esperimento CERN: collisione e nascita del bosone di Higgs.",
     "explain_particella": "Secondo il Modello Standard, le particelle non hanno massa propria. Acquisiscono massa attraversando il campo di Higgs, che permea l'intero universo.",
-    "explain_cern": "Al CERN, due fasci di protoni vengono accelerati e fatti collidere. Da queste collisioni può emergere il bosone di Higgs, confermando la teoria."
+    "explain_cern": "Al CERN, due fasci di protoni vengono accelerati e fatti collidere. Da queste collisioni può emergere il bosone di Higgs, confermando la teoria.",
+    "speed": "Velocità:"
   },
   "en": {
+    "title": "Higgs Field Simulator",
+    "btnParticella": "🔴 Particle in the Higgs Field",
+    "btnCERN": "💥 Simulate CERN Experiment",
     "start": "Select a mode to start the simulation.",
     "particella": "Watch how a particle gains mass while crossing the Higgs field.",
     "cern": "CERN experiment simulation: collision and Higgs boson appearance.",
     "explain_particella": "According to the Standard Model, particles have no intrinsic mass. They gain it by interacting with the Higgs field that fills the universe.",
-    "explain_cern": "At CERN, two beams of protons are accelerated and made to collide. From these collisions, the Higgs boson can emerge, confirming the theory."
+    "explain_cern": "At CERN, two beams of protons are accelerated and made to collide. From these collisions, the Higgs boson can emerge, confirming the theory.",
+    "speed": "Speed:"
   }
 };
 
@@ -20,7 +28,11 @@ let currentLang = "it";
 
 function cambiaLingua() {
   currentLang = document.getElementById("lang").value;
+  document.getElementById("title").innerText = testi[currentLang]["title"];
+  document.getElementById("btnParticella").innerText = testi[currentLang]["btnParticella"];
+  document.getElementById("btnCERN").innerText = testi[currentLang]["btnCERN"];
   document.getElementById("info").innerText = testi[currentLang]["start"];
+  document.getElementById("speedControl").innerHTML = testi[currentLang]["speed"] + ' <input type="range" id="speedSlider" min="0.5" max="4" step="0.1" value="1" oninput="updateSpeed(this.value)">';
   document.getElementById("explain").innerText = "";
   document.getElementById("audioPlayer").src = "";
 }
@@ -149,3 +161,6 @@ function animateCERN() {
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   requestAnimationFrame(animateCERN);
 }
+
+let globalSpeed = 1;
+function updateSpeed(val){globalSpeed=parseFloat(val);}

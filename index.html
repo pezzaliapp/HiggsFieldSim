@@ -11,21 +11,25 @@
     #info, #explain { margin: 10px; font-size: 1em; }
     button, select { margin: 10px; padding: 10px; background: #222; color: white; border: none; border-radius: 5px; cursor: pointer; }
     audio { margin-top: 10px; }
+    #speedControl { margin: 10px; color: white; }
   </style>
 </head>
 <body>
-  <h1>Higgs Field Simulator</h1>
+  <h1 id="title">Higgs Field Simulator</h1>
   <select id="lang" onchange="cambiaLingua()">
     <option value="it">🇮🇹 Italiano</option>
     <option value="en">🇬🇧 English</option>
-  </select>
-  <br />
-  <button onclick="modalitaParticella()">🎈 Particella nel Campo di Higgs</button>
-  <button onclick="modalitaCERN()">💥 Simula Esperimento CERN</button>
+  </select><br/>
+  <button id="btnParticella" onclick="modalitaParticella()">🔴 Particella nel Campo di Higgs</button>
+  <button id="btnCERN" onclick="modalitaCERN()">💥 Simula Esperimento CERN</button><br/>
+  <label id="speedControl">
+    Velocità:
+    <input type="range" id="speedSlider" min="0.5" max="4" step="0.1" value="1" oninput="updateSpeed(this.value)">
+  </label>
   <canvas id="higgsCanvas" width="360" height="600"></canvas>
   <div id="info">Seleziona una modalità per iniziare la simulazione.</div>
   <div id="explain"></div>
-  <audio id="audioPlayer" controls src=""></audio>
+  <audio id="audioPlayer" controls preload="auto"></audio>
   <script src="app.js"></script>
 </body>
 </html>
