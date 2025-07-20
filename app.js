@@ -35,6 +35,8 @@ let mode = "";
 let particles = [];
 
 function modalitaParticella() {
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   mode = "particella";
   x = 10;
   radius = 10;
@@ -45,6 +47,9 @@ function modalitaParticella() {
 }
 
 function modalitaCERN() {
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles = [];
   mode = "cern";
   angle = 0;
   collisionStep = 0;

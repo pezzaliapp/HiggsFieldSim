@@ -1,36 +1,23 @@
+
 <!DOCTYPE html>
-<html lang="it">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HiggsFieldSim</title>
-  <link rel="manifest" href="manifest.json">
-  <style>
-    body { margin: 0; background: black; color: white; font-family: sans-serif; text-align: center; }
-    canvas { display: block; margin: 0 auto; background: radial-gradient(circle, #111 0%, #000 100%); }
-    #info, #explain { margin: 10px; font-size: 1em; }
-    button, select { margin: 10px; padding: 10px; background: #222; color: white; border: none; border-radius: 5px; cursor: pointer; }
-    audio { margin-top: 10px; }
-    #speedControl { margin: 10px; color: white; }
-  </style>
+  <meta charset="utf-8">
+  <title>Higgs Simulator</title>
 </head>
-<body>
-  <h1 id="title">Higgs Field Simulator</h1>
+<body style="background:black;color:white;text-align:center;">
+  <h1>Higgs Simulator</h1>
   <select id="lang" onchange="cambiaLingua()">
     <option value="it">🇮🇹 Italiano</option>
     <option value="en">🇬🇧 English</option>
-  </select><br/>
-  <button id="btnParticella" onclick="modalitaParticella()">🔴 Particella nel Campo di Higgs</button>
-  <button id="btnCERN" onclick="modalitaCERN()">💥 Simula Esperimento CERN</button><br/>
-  <label id="speedControl">
-    Velocità:
-    <input type="range" id="speedSlider" min="0.5" max="4" step="0.1" value="1" oninput="updateSpeed(this.value)">
-  </label>
+  </select>
+  <br>
+  <button onclick="modalitaParticella()">Particella</button>
+  <button onclick="modalitaCERN()">CERN</button>
   <canvas id="higgsCanvas" width="360" height="600"></canvas>
-  <div id="info">Seleziona una modalità per iniziare la simulazione.</div>
+  <div id="info"></div>
   <div id="explain"></div>
-  <p style="font-size: 0.9em; color: #aaa; max-width: 300px; margin: 0 auto;">Nota: il campo di Higgs è presente ovunque. Nella realtà, una particella non perde la massa dopo averlo attraversato.</p>
-  <audio id="audioPlayer" controls preload="auto"></audio>
+  <audio id="audioPlayer" controls style="display:none"></audio>
   <script src="app.js"></script>
 </body>
 </html>
