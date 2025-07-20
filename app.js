@@ -52,7 +52,11 @@ function modalitaParticella() {
   radius = 10;
   document.getElementById("info").innerText = testi[currentLang]["particella"];
   document.getElementById("explain").innerText = testi[currentLang]["explain_particella"];
-  document.getElementById("audioPlayer").src = "audio/particella-" + currentLang + ".mp3";
+  let player=document.getElementById("audioPlayer");
+  player.src="audio/particella-" + currentLang + ".mp3";
+  player.style.display="block";
+  player.load();
+  player.play().catch(()=>console.log("Autoplay bloccato"));
   animate();
 }
 
@@ -63,7 +67,11 @@ function modalitaCERN() {
   particles = [];
   document.getElementById("info").innerText = testi[currentLang]["cern"];
   document.getElementById("explain").innerText = testi[currentLang]["explain_cern"];
-  document.getElementById("audioPlayer").src = "audio/cern-" + currentLang + ".mp3";
+  let player=document.getElementById("audioPlayer");
+  player.src="audio/cern-" + currentLang + ".mp3";
+  player.style.display="block";
+  player.load();
+  player.play().catch(()=>console.log("Autoplay bloccato"));
   animateCERN();
 }
 
@@ -101,13 +109,13 @@ function animate() {
 
   if (x > fieldStart && x < fieldEnd) {
     speed = 1;
-    if (radius < 20) radius += 0.2;
+    if (radius < 20) radius += 0.2 * globalSpeed;
   } else {
     speed = 2;
     radius = 10;
   }
 
-  x += speed;
+  x += speed * globalSpeed;
   if (x > canvas.width + 10) x = -10;
   requestAnimationFrame(animate);
 }
@@ -127,7 +135,7 @@ function animateCERN() {
     ctx.beginPath();
     ctx.arc(collisionStep - 50, 0, 5, 0, Math.PI * 2);
     ctx.fill();
-    collisionStep += 2;
+    collisionStep += 2 * globalSpeed;
   } else {
     // esplosione e particelle
     if (particles.length === 0) {
@@ -145,8 +153,8 @@ function animateCERN() {
     }
 
     for (let p of particles) {
-      p.x += p.dx;
-      p.y += p.dy;
+      p.x += p.dx * globalSpeed;
+      p.y += p.dy * globalSpeed;
       ctx.fillStyle = "#FF69B4";
       ctx.beginPath();
       ctx.arc(p.x, p.y, 3, 0, 2 * Math.PI);
