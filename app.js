@@ -1,164 +1,129 @@
-
-let testi = {
-  "it": {
-    "start": "Seleziona una modalità per iniziare la simulazione.",
-    "particella": "Osserva come una particella acquisisce massa attraversando il campo di Higgs.",
-    "cern": "Simulazione dell'esperimento CERN: collisione e nascita del bosone di Higgs.",
-    "explain_particella": "Secondo il Modello Standard, le particelle non hanno massa propria. Acquisiscono massa attraversando il campo di Higgs, che permea l'intero universo.",
-    "explain_cern": "Al CERN, due fasci di protoni vengono accelerati e fatti collidere. Da queste collisioni può emergere il bosone di Higgs, confermando la teoria."
-  },
-  "en": {
-    "start": "Select a mode to start the simulation.",
-    "particella": "Watch how a particle gains mass while crossing the Higgs field.",
-    "cern": "CERN experiment simulation: collision and Higgs boson appearance.",
-    "explain_particella": "According to the Standard Model, particles have no intrinsic mass. They gain it by interacting with the Higgs field that fills the universe.",
-    "explain_cern": "At CERN, two beams of protons are accelerated and made to collide. From these collisions, the Higgs boson can emerge, confirming the theory."
-  }
-};
-
-let currentLang = "it";
-
-function cambiaLingua() {
-  currentLang = document.getElementById("lang").value;
-  document.getElementById("info").innerText = testi[currentLang]["start"];
-  document.getElementById("explain").innerText = "";
-  document.getElementById("audioPlayer").src = "";
+// Registra il Service Worker (PWA)
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+    .then(reg => console.log("Service Worker registrato", reg))
+    .catch(err => console.error("Service Worker non registrato", err));
 }
 
+// Variabili globali
+let animazioneAttiva = null;
 
-const canvas = document.getElementById("higgsCanvas");
-const ctx = canvas.getContext("2d");
-
-let angle = 0;
-let collisionStep = 0;
-let mode = "";
-let particles = [];
-
-function modalitaParticella() {
-  ctx.setTransform(1, 0, 0, 1, 0, 0);
+// Funzione: resetta il canvas
+function resettaSimulazione() {
+  const canvas = document.getElementById("simulazioneCanvas");
+  const ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  mode = "particella";
-  x = 10;
-  radius = 10;
-  document.getElementById("info").innerText = testi[currentLang]["particella"];
-  document.getElementById("explain").innerText = testi[currentLang]["explain_particella"];
-  document.getElementById("audioPlayer").src = "audio/particella-" + currentLang + ".mp3";
-  animate();
+  if (animazioneAttiva) cancelAnimationFrame(animazioneAttiva);
+  canvas.style.display = "none";
+  document.getElementById("notaEsplicativa")?.remove();
 }
 
-function modalitaCERN() {
-  ctx.setTransform(1, 0, 0, 1, 0, 0);
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles = [];
-  mode = "cern";
-  angle = 0;
-  collisionStep = 0;
-  particles = [];
-  document.getElementById("info").innerText = testi[currentLang]["cern"];
-  document.getElementById("explain").innerText = testi[currentLang]["explain_cern"];
-  document.getElementById("audioPlayer").src = "audio/cern-" + currentLang + ".mp3";
-  animateCERN();
-}
+// Simulazione: Campo di Higgs
+function simulaCampoHiggs() {
+  resettaSimulazione();
+  const canvas = document.getElementById("simulazioneCanvas");
+  const ctx = canvas.getContext("2d");
+  canvas.style.display = "block";
 
-// Simulazione campo Higgs
-let x = 10, y = canvas.height / 2;
-let speed = 2;
-let radius = 10;
-let fieldStart = 120, fieldEnd = 280;
-let hasAcquiredMass = false;
+  let x = 0;
+  let y = canvas.height / 2;
+  let radius = 10;
+  let dx = 2;
+  const campoInizio = canvas.width * 0.3;
+  const campoFine = canvas.width * 0.7;
+  let massaPresente = false;
 
-function drawField() {
-  ctx.fillStyle = "#111";
-  ctx.fillRect(fieldStart, 0, fieldEnd - fieldStart, canvas.height);
-  for (let i = 0; i < 100; i++) {
-    let px = fieldStart + Math.random() * (fieldEnd - fieldStart);
-    let py = Math.random() * canvas.height;
-    ctx.fillStyle = "rgba(0,255,255,0.2)";
+  function disegna() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Campo di Higgs
+    ctx.fillStyle = "rgba(0, 100, 255, 0.2)";
+    ctx.fillRect(campoInizio, 0, campoFine - campoInizio, canvas.height);
+
+    // Particella
     ctx.beginPath();
-    ctx.arc(px, py, 2, 0, Math.PI * 2);
+    ctx.arc(x, y, radius, 0, Math.PI * 2);
+    ctx.fillStyle = "#ff4500";
     ctx.fill();
+    ctx.closePath();
+
+    // Rallenta e ingrandisce nel campo
+    if (x > campoInizio && x < campoFine) {
+      if (!massaPresente) {
+        dx *= 0.5;
+        radius *= 1.5;
+        massaPresente = true;
+      }
+    }
+
+    x += dx;
+    if (x - radius < canvas.width) {
+      animazioneAttiva = requestAnimationFrame(disegna);
+    }
   }
+
+  disegna();
+
+  const nota = document.createElement("div");
+  nota.id = "notaEsplicativa";
+  nota.style.color = "white";
+  nota.style.textAlign = "center";
+  nota.style.marginTop = "10px";
+  nota.innerText =
+    "Nota: il campo di Higgs è presente ovunque. Nella realtà, una particella non perde la massa dopo averlo attraversato.";
+  canvas.parentNode.appendChild(nota);
 }
 
-function drawParticle() {
-  ctx.fillStyle = "#FFD700";
-  ctx.beginPath();
-  ctx.arc(x, y, radius, 0, Math.PI * 2);
-  ctx.fill();
-}
+// Simulazione: CERN
+function simulaCERN() {
+  resettaSimulazione();
+  const canvas = document.getElementById("simulazioneCanvas");
+  const ctx = canvas.getContext("2d");
+  canvas.style.display = "block";
 
+  let x1 = 0;
+  let x2 = canvas.width;
+  let y = canvas.height / 2;
+  let dx1 = 3;
+  let dx2 = -3;
+  let collided = false;
 
-function animate() {
-  if (mode !== "particella") return;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawField();
-  drawParticle();
+  function disegnaCollisione() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  if (!hasAcquiredMass && x > fieldStart && x < fieldEnd) {
-    speed = 1;
-    if (radius < 20) {
-      radius += 0.2;
+    if (!collided && Math.abs(x1 - x2) < 20) {
+      collided = true;
+    }
+
+    if (!collided) {
+      // Due particelle in avvicinamento
+      ctx.beginPath();
+      ctx.arc(x1, y, 10, 0, Math.PI * 2);
+      ctx.fillStyle = "cyan";
+      ctx.fill();
+      ctx.closePath();
+
+      ctx.beginPath();
+      ctx.arc(x2, y, 10, 0, Math.PI * 2);
+      ctx.fillStyle = "magenta";
+      ctx.fill();
+      ctx.closePath();
+
+      x1 += dx1;
+      x2 += dx2;
+      animazioneAttiva = requestAnimationFrame(disegnaCollisione);
     } else {
-      hasAcquiredMass = true;
+      // Esplosione semplice simulata con onde
+      for (let i = 1; i < 6; i++) {
+        ctx.beginPath();
+        ctx.arc((x1 + x2) / 2, y, i * 20, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(255,255,0,${1 - i * 0.2})`;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.closePath();
+      }
     }
   }
 
-  x += speed;
-  if (x > canvas.width + 10) {
-    x = -10;
-    if (hasAcquiredMass) {
-      speed = 1;
-      radius = 20;
-    }
-  }
-
-  requestAnimationFrame(animate);
+  disegnaCollisione();
 }
-
-function animateCERN() {
-  if (mode !== "cern") return;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.save();
-  ctx.translate(canvas.width / 2, canvas.height / 2);
-
-  // disegna rivelatore ATLAS stilizzato
-  for (let r = 20; r <= 100; r += 20) {
-    ctx.strokeStyle = "rgba(255,255,255,0.1)";
-    ctx.beginPath();
-    ctx.arc(0, 0, r, 0, 2 * Math.PI);
-    ctx.stroke();
-  }
-
-  if (particles.length === 0) {
-    for (let i = 0; i < 25; i++) {
-      let angle = Math.random() * 2 * Math.PI;
-      let speed = 1 + Math.random() * 2;
-      particles.push({
-        x: 0,
-        y: 0,
-        dx: Math.cos(angle) * speed,
-        dy: Math.sin(angle) * speed,
-        color: `hsl(${Math.random() * 360}, 100%, 70%)`,
-        label: (i === 12 ? "H" : (Math.random() > 0.7 ? "μ⁺" : (Math.random() > 0.5 ? "γ" : "e⁻")))
-      });
-    }
-  }
-
-  for (let p of particles) {
-    p.x += p.dx * globalSpeed;
-    p.y += p.dy * globalSpeed;
-
-    ctx.fillStyle = p.color;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, 2, 0, 2 * Math.PI);
-    ctx.fill();
-
-    ctx.fillStyle = "white";
-    ctx.font = "10px sans-serif";
-    ctx.fillText(p.label, p.x + 4, p.y);
-  }
-
-  ctx.restore();
-  requestAnimationFrame(animateCERN);
-}
-
