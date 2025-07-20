@@ -50,6 +50,8 @@ function modalitaParticella() {
   mode = "particella";
   x = 10;
   radius = 10;
+  x = 10;
+  speed = 2;
   hasAcquiredMass = false;
   document.getElementById("info").innerText = testi[currentLang]["particella"];
   document.getElementById("explain").innerText = testi[currentLang]["explain_particella"];
@@ -80,6 +82,8 @@ function modalitaCERN() {
 let x = 10, y = canvas.height / 2;
 let speed = 2;
 let radius = 10;
+  x = 10;
+  speed = 2;
   hasAcquiredMass = false;
 let fieldStart = 120, fieldEnd = 280;
 
