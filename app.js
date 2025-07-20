@@ -103,21 +103,34 @@ function drawParticle() {
   ctx.fill();
 }
 
+
 function animate() {
   if (mode !== "particella") return;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawField();
   drawParticle();
 
-  if (x > fieldStart && x < fieldEnd) {
+  if (!hasAcquiredMass && x > fieldStart && x < fieldEnd) {
     speed = 1;
-    if (radius < 20) radius += 0.2 * globalSpeed;
+    if (radius < 20) {
+      radius += 0.2 * globalSpeed;
+    } else {
+      hasAcquiredMass = true;
+    }
+  }
+
   x += speed * globalSpeed;
-  if (x > canvas.width + 10) x = -10;
+  if (x > canvas.width + 10) {
+    x = -10;
+    if (hasAcquiredMass) {
+      // mantiene massa e velocità dopo la prima interazione
+      speed = 1;
+      radius = 20;
+    }
+  }
+
   requestAnimationFrame(animate);
 }
-
-// Nuova simulazione CERN con esplosione
 function animateCERN() {
   if (mode !== "cern") return;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
