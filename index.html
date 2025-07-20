@@ -8,16 +8,24 @@
   <style>
     body { margin: 0; background: black; color: white; font-family: sans-serif; text-align: center; }
     canvas { display: block; margin: 0 auto; background: radial-gradient(circle, #111 0%, #000 100%); }
-    #info { margin: 10px; font-size: 1em; }
-    button { margin: 10px; padding: 10px; background: #222; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    #info, #explain { margin: 10px; font-size: 1em; }
+    button, select { margin: 10px; padding: 10px; background: #222; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    audio { margin-top: 10px; }
   </style>
 </head>
 <body>
   <h1>Higgs Field Simulator</h1>
-  <button onclick="modalitaParticella()">Particella nel Campo di Higgs</button>
-  <button onclick="modalitaCERN()">Simula Esperimento CERN</button>
+  <select id="lang" onchange="cambiaLingua()">
+    <option value="it">🇮🇹 Italiano</option>
+    <option value="en">🇬🇧 English</option>
+  </select>
+  <br />
+  <button onclick="modalitaParticella()">🎈 Particella nel Campo di Higgs</button>
+  <button onclick="modalitaCERN()">💥 Simula Esperimento CERN</button>
   <canvas id="higgsCanvas" width="360" height="600"></canvas>
   <div id="info">Seleziona una modalità per iniziare la simulazione.</div>
+  <div id="explain"></div>
+  <audio id="audioPlayer" controls src=""></audio>
   <script src="app.js"></script>
 </body>
 </html>
