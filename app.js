@@ -50,6 +50,7 @@ function modalitaParticella() {
   mode = "particella";
   x = 10;
   radius = 10;
+  hasAcquiredMass = false;
   document.getElementById("info").innerText = testi[currentLang]["particella"];
   document.getElementById("explain").innerText = testi[currentLang]["explain_particella"];
   let player=document.getElementById("audioPlayer");
@@ -79,6 +80,7 @@ function modalitaCERN() {
 let x = 10, y = canvas.height / 2;
 let speed = 2;
 let radius = 10;
+  hasAcquiredMass = false;
 let fieldStart = 120, fieldEnd = 280;
 
 function drawField() {
@@ -166,4 +168,5 @@ function animateCERN() {
 }
 
 let globalSpeed = 1;
+let hasAcquiredMass = false;
 function updateSpeed(val){globalSpeed=parseFloat(val);}
