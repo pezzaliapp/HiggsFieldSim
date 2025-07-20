@@ -1,26 +1,18 @@
 
 let testi = {
   "it": {
-    "title": "Higgs Field Simulator",
-    "btnParticella": "🔴 Particella nel Campo di Higgs",
-    "btnCERN": "💥 Simula Esperimento CERN",
     "start": "Seleziona una modalità per iniziare la simulazione.",
     "particella": "Osserva come una particella acquisisce massa attraversando il campo di Higgs.",
     "cern": "Simulazione dell'esperimento CERN: collisione e nascita del bosone di Higgs.",
     "explain_particella": "Secondo il Modello Standard, le particelle non hanno massa propria. Acquisiscono massa attraversando il campo di Higgs, che permea l'intero universo.",
-    "explain_cern": "Al CERN, due fasci di protoni vengono accelerati e fatti collidere. Da queste collisioni può emergere il bosone di Higgs, confermando la teoria.",
-    "speed": "Velocità:"
+    "explain_cern": "Al CERN, due fasci di protoni vengono accelerati e fatti collidere. Da queste collisioni può emergere il bosone di Higgs, confermando la teoria."
   },
   "en": {
-    "title": "Higgs Field Simulator",
-    "btnParticella": "🔴 Particle in the Higgs Field",
-    "btnCERN": "💥 Simulate CERN Experiment",
     "start": "Select a mode to start the simulation.",
     "particella": "Watch how a particle gains mass while crossing the Higgs field.",
     "cern": "CERN experiment simulation: collision and Higgs boson appearance.",
     "explain_particella": "According to the Standard Model, particles have no intrinsic mass. They gain it by interacting with the Higgs field that fills the universe.",
-    "explain_cern": "At CERN, two beams of protons are accelerated and made to collide. From these collisions, the Higgs boson can emerge, confirming the theory.",
-    "speed": "Speed:"
+    "explain_cern": "At CERN, two beams of protons are accelerated and made to collide. From these collisions, the Higgs boson can emerge, confirming the theory."
   }
 };
 
@@ -28,11 +20,7 @@ let currentLang = "it";
 
 function cambiaLingua() {
   currentLang = document.getElementById("lang").value;
-  document.getElementById("title").innerText = testi[currentLang]["title"];
-  document.getElementById("btnParticella").innerText = testi[currentLang]["btnParticella"];
-  document.getElementById("btnCERN").innerText = testi[currentLang]["btnCERN"];
   document.getElementById("info").innerText = testi[currentLang]["start"];
-  document.getElementById("speedControl").innerHTML = testi[currentLang]["speed"] + ' <input type="range" id="speedSlider" min="0.5" max="4" step="0.1" value="1" oninput="updateSpeed(this.value)">';
   document.getElementById("explain").innerText = "";
   document.getElementById("audioPlayer").src = "";
 }
@@ -50,16 +38,9 @@ function modalitaParticella() {
   mode = "particella";
   x = 10;
   radius = 10;
-  x = 10;
-  speed = 2;
-  hasAcquiredMass = false;
   document.getElementById("info").innerText = testi[currentLang]["particella"];
   document.getElementById("explain").innerText = testi[currentLang]["explain_particella"];
-  let player=document.getElementById("audioPlayer");
-  player.src="audio/particella-" + currentLang + ".mp3";
-  player.style.display="block";
-  player.load();
-  player.play().catch(()=>console.log("Autoplay bloccato"));
+  document.getElementById("audioPlayer").src = "audio/particella-" + currentLang + ".mp3";
   animate();
 }
 
@@ -70,11 +51,7 @@ function modalitaCERN() {
   particles = [];
   document.getElementById("info").innerText = testi[currentLang]["cern"];
   document.getElementById("explain").innerText = testi[currentLang]["explain_cern"];
-  let player=document.getElementById("audioPlayer");
-  player.src="audio/cern-" + currentLang + ".mp3";
-  player.style.display="block";
-  player.load();
-  player.play().catch(()=>console.log("Autoplay bloccato"));
+  document.getElementById("audioPlayer").src = "audio/cern-" + currentLang + ".mp3";
   animateCERN();
 }
 
@@ -82,9 +59,6 @@ function modalitaCERN() {
 let x = 10, y = canvas.height / 2;
 let speed = 2;
 let radius = 10;
-  x = 10;
-  speed = 2;
-  hasAcquiredMass = false;
 let fieldStart = 120, fieldEnd = 280;
 
 function drawField() {
@@ -107,34 +81,26 @@ function drawParticle() {
   ctx.fill();
 }
 
-
 function animate() {
   if (mode !== "particella") return;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawField();
   drawParticle();
 
-  if (!hasAcquiredMass && x > fieldStart && x < fieldEnd) {
+  if (x > fieldStart && x < fieldEnd) {
     speed = 1;
-    if (radius < 20) {
-      radius += 0.2 * globalSpeed;
-    } else {
-      hasAcquiredMass = true;
-    }
+    if (radius < 20) radius += 0.2;
+  } else {
+    speed = 2;
+    radius = 10;
   }
 
-  x += speed * globalSpeed;
-  if (x > canvas.width + 10) {
-    x = -10;
-    if (hasAcquiredMass) {
-      // mantiene massa e velocità dopo la prima interazione
-      speed = 1;
-      radius = 20;
-    }
-  }
-
+  x += speed;
+  if (x > canvas.width + 10) x = -10;
   requestAnimationFrame(animate);
 }
+
+// Nuova simulazione CERN con esplosione
 function animateCERN() {
   if (mode !== "cern") return;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -149,7 +115,7 @@ function animateCERN() {
     ctx.beginPath();
     ctx.arc(collisionStep - 50, 0, 5, 0, Math.PI * 2);
     ctx.fill();
-    collisionStep += 2 * globalSpeed;
+    collisionStep += 2;
   } else {
     // esplosione e particelle
     if (particles.length === 0) {
@@ -167,8 +133,8 @@ function animateCERN() {
     }
 
     for (let p of particles) {
-      p.x += p.dx * globalSpeed;
-      p.y += p.dy * globalSpeed;
+      p.x += p.dx;
+      p.y += p.dy;
       ctx.fillStyle = "#FF69B4";
       ctx.beginPath();
       ctx.arc(p.x, p.y, 3, 0, 2 * Math.PI);
@@ -183,7 +149,3 @@ function animateCERN() {
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   requestAnimationFrame(animateCERN);
 }
-
-let globalSpeed = 1;
-let hasAcquiredMass = false;
-function updateSpeed(val){globalSpeed=parseFloat(val);}
