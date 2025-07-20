@@ -109,51 +109,51 @@ function animate() {
 
   requestAnimationFrame(animate);
 }
+
 function animateCERN() {
   if (mode !== "cern") return;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.save();
   ctx.translate(canvas.width / 2, canvas.height / 2);
 
-  if (collisionStep < 100) {
-    // disegna fasci
-    ctx.fillStyle = "#00FFFF";
+  // disegna rivelatore ATLAS stilizzato
+  for (let r = 20; r <= 100; r += 20) {
+    ctx.strokeStyle = "rgba(255,255,255,0.1)";
     ctx.beginPath();
-    ctx.arc(-collisionStep + 50, 0, 5, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(collisionStep - 50, 0, 5, 0, Math.PI * 2);
-    ctx.fill();
-    collisionStep += 2;
-  } else {
-    // esplosione e particelle
-    if (particles.length === 0) {
-      for (let i = 0; i < 20; i++) {
-        let angle = Math.random() * 2 * Math.PI;
-        let speed = 1 + Math.random() * 2;
-        particles.push({
-          x: 0,
-          y: 0,
-          dx: Math.cos(angle) * speed,
-          dy: Math.sin(angle) * speed,
-          label: (i === 5 ? "H" : (Math.random() > 0.7 ? "e⁻" : (Math.random() > 0.5 ? "μ⁺" : "γ")))
-        });
-      }
-    }
+    ctx.arc(0, 0, r, 0, 2 * Math.PI);
+    ctx.stroke();
+  }
 
-    for (let p of particles) {
-      p.x += p.dx;
-      p.y += p.dy;
-      ctx.fillStyle = "#FF69B4";
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, 3, 0, 2 * Math.PI);
-      ctx.fill();
-
-      ctx.fillStyle = "white";
-      ctx.font = "10px sans-serif";
-      ctx.fillText(p.label, p.x + 5, p.y);
+  if (particles.length === 0) {
+    for (let i = 0; i < 25; i++) {
+      let angle = Math.random() * 2 * Math.PI;
+      let speed = 1 + Math.random() * 2;
+      particles.push({
+        x: 0,
+        y: 0,
+        dx: Math.cos(angle) * speed,
+        dy: Math.sin(angle) * speed,
+        color: `hsl(${Math.random() * 360}, 100%, 70%)`,
+        label: (i === 12 ? "H" : (Math.random() > 0.7 ? "μ⁺" : (Math.random() > 0.5 ? "γ" : "e⁻")))
+      });
     }
   }
 
-  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  for (let p of particles) {
+    p.x += p.dx * globalSpeed;
+    p.y += p.dy * globalSpeed;
+
+    ctx.fillStyle = p.color;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 2, 0, 2 * Math.PI);
+    ctx.fill();
+
+    ctx.fillStyle = "white";
+    ctx.font = "10px sans-serif";
+    ctx.fillText(p.label, p.x + 4, p.y);
+  }
+
+  ctx.restore();
   requestAnimationFrame(animateCERN);
 }
+
