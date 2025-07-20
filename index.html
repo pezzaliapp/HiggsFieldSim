@@ -8,13 +8,16 @@
   <style>
     body { margin: 0; background: black; color: white; font-family: sans-serif; text-align: center; }
     canvas { display: block; margin: 0 auto; background: radial-gradient(circle, #111 0%, #000 100%); }
-    #info { margin-top: 10px; font-size: 1em; }
+    #info { margin: 10px; font-size: 1em; }
+    button { margin: 10px; padding: 10px; background: #222; color: white; border: none; border-radius: 5px; cursor: pointer; }
   </style>
 </head>
 <body>
   <h1>Higgs Field Simulator</h1>
+  <button onclick="modalitaParticella()">Particella nel Campo di Higgs</button>
+  <button onclick="modalitaCERN()">Simula Esperimento CERN</button>
   <canvas id="higgsCanvas" width="360" height="600"></canvas>
-  <div id="info">Osserva come una particella acquisisce massa attraversando il campo di Higgs.</div>
+  <div id="info">Seleziona una modalità per iniziare la simulazione.</div>
   <script src="app.js"></script>
 </body>
 </html>
