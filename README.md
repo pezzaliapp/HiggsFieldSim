@@ -1,47 +1,105 @@
-# 💥 HiggsCERN Simulatore Completo
+# 💥 CERN Collision Simulator – Higgs Discovery
 
-Questa simulazione visualizza una **collisione di particelle** ispirata agli esperimenti del CERN (ATLAS/CMS), con particolare riferimento alla scoperta del **bosone di Higgs**.
+[🇮🇹 Leggi in Italiano](#🇮🇹-simulatore-di-collisione-cern--scoperta-del-bosone-di-higgs)  
+[🇬🇧 Read in English](#🇬🇧-cern-collision-simulator--higgs-boson-discovery)
 
-## 🔬 Descrizione
+---
 
-Quando due protoni si scontrano ad altissima energia, la loro energia può trasformarsi in massa, dando origine a nuove particelle. Questo simulatore rappresenta graficamente l'effetto di una collisione centrale con **particelle colorate** che si propagano in modo casuale — proprio come nei rivelatori del CERN.
+## 🇮🇹 Simulatore di Collisione CERN – Scoperta del Bosone di Higgs
 
-## 🧩 Funzionalità
+Questa simulazione visualizza una collisione di particelle ad altissima energia, come quelle effettuate al CERN negli esperimenti ATLAS e CMS, che nel 2012 hanno portato alla scoperta del bosone di Higgs.
 
-- Animazione canvas real-time
-- Pulsante “🔁 Ricomincia” per simulazioni multiple
-- Audio (esplosione) all'avvio della collisione
-- Testo esplicativo didattico
-- Compatibile con desktop, tablet e mobile
+### 🔬 Descrizione
 
-## 📁 Contenuto dello ZIP
+Nel Large Hadron Collider (LHC) del CERN, due fasci di protoni vengono accelerati quasi alla velocità della luce e fatti collidere.  
+A queste energie, l’energia cinetica si può trasformare in massa secondo la formula di Einstein (E=mc²), generando nuove particelle, tra cui – in casi rarissimi – il bosone di Higgs.
 
-- `index.html` — struttura principale dell’interfaccia
-- `style.css` — stile minimal e responsive
-- `collision_simulation.js` — script di animazione dinamica
-- `explosion.mp3` — suono collisione (da sostituire con suono reale)
-- `README.md` — descrizione del progetto
+Questa simulazione rappresenta l’effetto visibile di una collisione centrale:
 
-## 🎓 Obiettivo educativo
+- particelle che si espandono radialmente  
+- colore e direzione casuali  
+- rappresentazione semplificata ispirata ai dati dei rivelatori CMS/ATLAS
 
-Questo progetto è pensato per **divulgazione scientifica** in ambito scolastico, museale e didattico. È una rappresentazione **semplificata e simbolica** dell’esperimento, utile per introdurre concetti di:
-- Energia ↔ Massa (E=mc²)
-- Interazioni fondamentali
-- Campo di Higgs
+### 🧩 Contenuto del pacchetto
 
-## 🚀 Esecuzione
+- `index.html` — struttura della simulazione e interfaccia  
+- `style.css` — stile minimale e responsive  
+- `collision_simulation.js` — script canvas con effetto particelle  
+- `explosion.mp3` — suono di accompagnamento  
+- `README.md` — descrizione e istruzioni  
 
-1. Decomprimi il file `.zip`
-2. Apri `index.html` in un browser moderno (Chrome, Firefox, Safari)
-3. Clicca su **🔁 Ricomincia** per rigenerare l’evento
+### 📚 Obiettivo
 
-> ✅ Non è richiesta connessione internet. Nessuna libreria esterna necessaria.
+Questa simulazione è pensata per:
 
-## 🌍 Multilingua (prossimamente)
+- Scuole e Università  
+- Eventi di divulgazione scientifica  
+- Appassionati di fisica delle particelle  
 
-La simulazione è predisposta per essere tradotta in inglese, francese, tedesco, spagnolo. Contattaci per collaborazioni.
+Offre un modo visivo e accessibile per introdurre il concetto di collisione ad alta energia e comprendere come si creano nuove particelle.
+
+### 🚀 Esecuzione
+
+1. Estrai lo ZIP  
+2. Apri `index.html` in un browser moderno (Chrome, Firefox, Safari)  
+3. Clicca su “🔁 Ricomincia” per avviare la simulazione  
+
+> ⚠️ Funziona offline. Nessuna libreria esterna richiesta.
+
+### 🎓 Curiosità
+
+La scoperta del bosone di Higgs è valsa il Premio Nobel per la Fisica nel 2013.  
+L’esperimento ha confermato l'esistenza del **campo di Higgs**, che conferisce massa a tutte le particelle elementari.
+
+---
+
+## 🇬🇧 CERN Collision Simulator – Higgs Boson Discovery
+
+This simulation visualizes a high-energy particle collision, similar to those performed at CERN in the ATLAS and CMS experiments, which led to the discovery of the Higgs boson in 2012.
+
+### 🔬 Description
+
+Inside the Large Hadron Collider (LHC) at CERN, two proton beams are accelerated close to the speed of light and then collided.  
+At these energies, kinetic energy can be converted into mass (Einstein’s E=mc²), generating new particles — including, in rare cases, the **Higgs boson**.
+
+This simulation symbolically represents such a central collision:
+
+- particles expanding radially  
+- random colors and directions  
+- simplified representation inspired by CMS/ATLAS data  
+
+### 🧩 Package Contents
+
+- `index.html` — simulation structure and interface  
+- `style.css` — minimal and responsive design  
+- `collision_simulation.js` — particle effect canvas script  
+- `explosion.mp3` — optional sound effect  
+- `README.md` — description and instructions  
+
+### 📚 Target Audience
+
+This simulation is ideal for:
+
+- Schools and universities  
+- Science outreach events  
+- Particle physics enthusiasts  
+
+It offers a simple, visual way to understand high-energy collisions and how new particles are created.
+
+### 🚀 How to Use
+
+1. Extract the ZIP  
+2. Open `index.html` in any modern browser (Chrome, Firefox, Safari)  
+3. Click “🔁 Restart” to trigger the simulation  
+
+> ⚠️ Works offline. No external libraries needed.
+
+### 🎓 Did You Know?
+
+The discovery of the Higgs boson earned the Nobel Prize in Physics in 2013.  
+The experiment confirmed the existence of the **Higgs field**, which gives mass to all elementary particles.
 
 ---
 
 © 2025 [Alessandro Pezzali – pezzaliAPP.com](https://www.pezzaliapp.com)  
-Educational Open Source – Made for Makers 🚀
+**Educational Open Source – Made for Makers 🚀**
