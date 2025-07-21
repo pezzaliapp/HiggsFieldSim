@@ -1,23 +1,18 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
-  <meta charset="utf-8">
-  <title>Higgs Simulator</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simulazione CERN - Bosone di Higgs</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body style="background:black;color:white;text-align:center;">
-  <h1>Higgs Simulator</h1>
-  <select id="lang" onchange="cambiaLingua()">
-    <option value="it">🇮🇹 Italiano</option>
-    <option value="en">🇬🇧 English</option>
-  </select>
-  <br>
-  <button onclick="modalitaParticella()">Particella</button>
-  <button onclick="modalitaCERN()">CERN</button>
-  <canvas id="higgsCanvas" width="360" height="600"></canvas>
-  <div id="info"></div>
-  <div id="explain"></div>
-  <audio id="audioPlayer" controls style="display:none"></audio>
-  <script src="app.js"></script>
+<body>
+  <h1>CERN Higgs Collision</h1>
+  <canvas id="cernCanvas"></canvas>
+  <p id="note">Al CERN, i protoni vengono accelerati fino a sfiorare la velocità della luce. Quando collidono, l’energia dell’urto può trasformarsi in massa, dando origine a nuove particelle. Tra queste, è stato osservato il bosone di Higgs, confermando la teoria del campo di Higgs.</p>
+  <button onclick="restartSimulation()">🔁 Ricomincia</button>
+  <audio id="explosionSound" src="explosion.mp3"></audio>
+  <script src="collision_simulation.js"></script>
 </body>
 </html>
